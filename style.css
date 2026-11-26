@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+:root {
+    --bg: #0f1b2d;
+    --card: #16263d;
+    --card-border: #24395a;
+    --text: #e8eef7;
+    --text-muted: #8fa3bf;
+    --accent: #4fb3d9;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100dvh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- الزخارف الإسلامية (خلفية خفيفة) ---------- */
+
+/* نجمة ثمانية متكررة، بتتلاشى ناحية النص عشان متزاحمش المواقيت */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'><g fill='none' stroke='%234fb3d9' stroke-width='1'><rect x='24' y='24' width='32' height='32'/><rect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/></g></svg>");
+    background-size: 80px 80px;
+    -webkit-mask-image: radial-gradient(ellipse at center, transparent 25%, #000 100%);
+    mask-image: radial-gradient(ellipse at center, transparent 25%, #000 100%);
+}
+
+/* هلال فوق الشمال + مسجد بمآذنه تحت */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-image:
+        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'><path fill='%234fb3d9' fill-opacity='0.35' d='M40 8A24 24 0 1 0 40 52A18 18 0 1 1 40 8Z'/></svg>"),
+        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 200'><g fill='%2316263d'><rect x='0' y='170' width='800' height='30'/><rect x='300' y='120' width='200' height='50'/><path d='M300 120C300 50 500 50 500 120Z'/><rect x='399' y='48' width='2' height='20'/><circle cx='400' cy='46' r='4'/><rect x='230' y='140' width='70' height='30'/><path d='M230 140C230 100 300 100 300 140Z'/><rect x='500' y='140' width='70' height='30'/><path d='M500 140C500 100 570 100 570 140Z'/><rect x='142' y='70' width='16' height='100'/><rect x='137' y='98' width='26' height='6'/><path d='M142 70L150 36L158 70Z'/><rect x='642' y='70' width='16' height='100'/><rect x='637' y='98' width='26' height='6'/><path d='M642 70L650 36L658 70Z'/><rect x='54' y='115' width='12' height='55'/><path d='M54 115L60 92L66 115Z'/><rect x='734' y='115' width='12' height='55'/><path d='M734 115L740 92L746 115Z'/></g><path fill='%230f1b2d' d='M385 170V148A15 15 0 0 1 415 148V170Z'/></svg>"),
+        linear-gradient(#16263d, #16263d);
+    background-position:
+        left 4vw top 6vh,
+        center bottom,
+        center bottom;
+    background-size:
+        auto 10vh,
+        auto 26vh,
+        100% 3.9vh;
+}
+
+/* ---------- الحاوية الرئيسية (في نص الصفحة) ---------- */
+body > div {
+    position: relative;
+    z-index: 1;
+    width: min(92vw, 380px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(6px, 1.5vh, 12px);
+}
+
+#city-name {
+    font-size: clamp(1.2rem, 3.4vh, 1.6rem);
+    font-weight: 700;
+    text-align: center;
+}
+
+#weekday {
+    font-size: clamp(1rem, 2.6vh, 1.2rem);
+    font-weight: 500;
+    color: var(--accent);
+    text-align: center;
+    margin-top: -4px;
+}
+
+#dates {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0 8px;
+    margin-top: -4px;
+    margin-bottom: clamp(2px, 1vh, 8px);
+    font-size: clamp(0.8rem, 2vh, 0.95rem);
+    font-weight: 400;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* نقطة فاصلة بين الميلادي والهجري */
+#dates span + span::before {
+    content: '·';
+    margin-inline-end: 8px;
+}
+
+/* ---------- مربعات الصلوات ---------- */
+#prayer-times-cards {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1.4vh, 10px);
+}
+
+#prayer-times-cards > div {
+    display: flex;
+    justify-content: space-between; /* الاسم يمين والتوقيت شمال (الصفحة RTL) */
+    align-items: center;
+    padding: clamp(8px, 1.8vh, 14px) 18px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+}
+
+.prayer-name {
+    font-size: clamp(1rem, 2.4vh, 1.15rem);
+    font-weight: 500;
+}
+
+.prayer-time {
+    font-size: clamp(1rem, 2.4vh, 1.15rem);
+    font-weight: 500;
+    color: var(--accent);
+    direction: ltr;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- زر اختيار المدينة (فوق على اليمين) ---------- */
+#select-city {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 200px;
+    z-index: 10;
+}
+
+/* ---------- تنسيق Tom Select ----------
+   بنستخدم #select-city قبل كل selector عشان نكسب على تنسيق المكتبة الافتراضي */
+#select-city .ts-wrapper {
+    font-family: 'Tajawal', sans-serif;
+}
+
+#select-city .ts-wrapper .ts-control,
+#select-city .ts-wrapper.single .ts-control,
+#select-city .ts-wrapper.single.input-active .ts-control,
+#select-city .ts-wrapper.focus .ts-control {
+    background: var(--card);
+    background-image: none;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 10px 14px;
+    padding-inline: 14px 36px; /* مساحة للسهم */
+    min-height: 42px;
+    font-size: 1rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s;
+}
+
+#select-city .ts-wrapper .ts-control:hover,
+#select-city .ts-wrapper.focus .ts-control,
+#select-city .ts-wrapper.dropdown-active .ts-control {
+    border-color: var(--accent);
+}
+
+#select-city .ts-wrapper .ts-control > .item,
+#select-city .ts-wrapper .ts-control > input,
+#select-city .ts-wrapper.single .ts-control > .item {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text);
+    text-align: right;
+}
+
+#select-city .ts-wrapper .ts-control > input::placeholder {
+    color: var(--text-muted);
+}
+
+/* سهم القايمة */
+#select-city .ts-wrapper.single .ts-control::after {
+    border-color: var(--accent) transparent transparent transparent;
+}
+
+#select-city .ts-wrapper.single.dropdown-active .ts-control::after {
+    border-color: transparent transparent var(--accent) transparent;
+}
+
+/* القايمة المنسدلة */
+#select-city .ts-dropdown,
+#select-city .ts-dropdown.single {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    margin-top: 6px;
+    overflow: hidden;
+    text-align: right;
+}
+
+#select-city .ts-dropdown .ts-dropdown-content {
+    max-height: 45vh;
+    scrollbar-width: thin;
+    scrollbar-color: var(--card-border) transparent;
+}
+
+#select-city .ts-dropdown .optgroup-header {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: #12213a;
+    padding: 8px 14px;
+}
+
+#select-city .ts-dropdown .option {
+    padding: 9px 14px;
+    color: var(--text);
+}
+
+#select-city .ts-dropdown .option.active,
+#select-city .ts-dropdown .option:hover {
+    background: #1f3556;
+    color: var(--text);
+}
+
+#select-city .ts-dropdown .option.selected,
+#select-city .ts-dropdown .option.selected.active {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 500;
+}
+
+#select-city .ts-dropdown .no-results {
+    padding: 9px 14px;
+    color: var(--text-muted);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3.9vh;
+    min-height: 22px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    direction: ltr;
+}
