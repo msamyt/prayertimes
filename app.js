@@ -138,10 +138,10 @@ new TomSelect("#selected-city", {
 });
 
 document.getElementById("selected-city").addEventListener('change', ()=>{
-    let cityName = this.selectedOptions[0].text; 
+    let cityName = document.getElementById("selected-city").selectedOptions[0].text; 
     document.getElementById("city-name").textContent = 'مواقيت الصلاة ب'+cityName
 
-    let city = this.value;
+    let city = document.getElementById("selected-city").value;
     let country = countries[city]
     getTimes(today, city, country)
 })
